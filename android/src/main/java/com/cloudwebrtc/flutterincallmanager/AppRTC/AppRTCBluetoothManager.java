@@ -35,6 +35,11 @@ import com.cloudwebrtc.flutterincallmanager.FlutterIncallManagerPlugin;
  * AppRTC demo.
  */
 public class AppRTCBluetoothManager {
+	public interface AudioManagerAware {
+		 void updateAudioDeviceState();
+	}
+
+
   private static final String TAG = "AppRTCBluetoothManager";
 
   // Timeout interval for starting or stopping audio to a Bluetooth SCO device.
@@ -63,7 +68,7 @@ public class AppRTCBluetoothManager {
   }
 
   private final Context apprtcContext;
-  private final FlutterIncallManagerPlugin apprtcAudioManager;
+  private final AudioManagerAware apprtcAudioManager;
   private final AudioManager audioManager;
   private final Handler handler;
 
@@ -190,12 +195,12 @@ public class AppRTCBluetoothManager {
   }
 
   /** Construction. */
-  public static AppRTCBluetoothManager create(Context context, FlutterIncallManagerPlugin audioManager) {
+  public static AppRTCBluetoothManager create(Context context, AudioManagerAware audioManager) {
     Log.d(TAG, "create");
     return new AppRTCBluetoothManager(context, audioManager);
   }
 
-  protected AppRTCBluetoothManager(Context context, FlutterIncallManagerPlugin audioManager) {
+  protected AppRTCBluetoothManager(Context context, AudioManagerAware audioManager) {
     Log.d(TAG, "ctor");
     apprtcContext = context;
     apprtcAudioManager = audioManager;
